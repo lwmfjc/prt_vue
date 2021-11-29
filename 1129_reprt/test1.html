@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="my-container">
+    counter:{{counter}}
+    <span v-bind:title="dyntitle">heihei</span>
+
+    <p>{{myP}}</p>
+    <button v-on:click="textWithNum">改文字</button>
+    <input v-model="myP">
+    <p>条件处理</p>
+    <div v-if="seen" style="background-color: red;width: 100px;height: 100px"></div>
+    <button v-on:click="tigBtn">是否可见</button>
+    <p>循环出现span</p>
+    <div v-for="d in spans">
+    <span>
+        {{d.text}}
+    </span>
+        <br>
+
+    </div>
+    <my-cpt1 v-bind:todo="counter"></my-cpt1>
+</div>
+<script type="text/javascript">
+    const myCpt1 = {
+        props:['todo'],
+        template: `<p>hello {{todo}}</p>`,
+    };
+    Vue.createApp({
+        components: {
+            myCpt1
+        },
+        data() {
+            return {
+                counter: 1,
+                dyntitle: new Date(),
+                myP: new Date().toLocaleString(),
+                seen: true,
+                spans: [{
+                    text: "t1",
+                }, {
+                    text: "t2",
+                }, {
+                    text: "t3",
+                },]
+            }
+        },
+        methods: {
+            tigBtn() {
+                this.seen = !this.seen;
+            },
+            textWithNum() {
+                this.myP = new Date().toLocaleString();
+            }
+        },
+        mounted() {
+            setInterval(() => {
+                this.counter++;
+                this.dyntitle = new Date()
+            }, 1000)
+        }
+    }).mount("#my-container")
+</script>
+</body>
+</html>
