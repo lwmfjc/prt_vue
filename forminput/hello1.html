@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="root">
+    <p>{{hello}}</p>
+    <p>{{age}}</p>
+    <input v-model.number="age" type="text" />
+
+    <input v-model.trim="hello" type="text">
+    <button @click="getValue">得到值</button>
+    <p>多行文本</p>
+    <p style="white-space: pre-line;">{{message}}</p>
+    <!--只有v-bind才可以用:替代,v-model不行-->
+    <textarea v-model="message" ></textarea>
+    <p>复选框</p>
+    <input type="checkbox" id="checkbox" v-model="checked">
+    <p>{{checked}}</p>
+    <label for="checkbox">{{checked?'勾上了':'没勾选上'}}</label>
+    <p>多个复选框绑定到同一个数组中</p>
+
+    <div id="ly-checkboxes">
+        <input type="checkbox" id="jack" value="Jack" v-model="cNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="cNames">
+        <label for="mike">Mike</label>
+    </div>
+    <p>{{cNames}}</p>
+    <p>radio使用</p>
+    <div id="ly-radios">
+        <input type="radio" id="one" value="A" v-model="picked">
+        <label for="one" >A</label>
+        <input type="radio" id="two" value="B" v-model="picked">
+        <label for="two" >B</label>
+        <span>Picked{{picked}}</span>
+    </div>
+    <p>select prt</p>
+    <select multiple v-model="mySelect">
+        <option disabled value="">Please select</option>
+        <option value="0">A</option>
+        <option value="1">B</option>
+        <option value="2">C</option>
+    </select>
+    <p>{{mySelect}}</p>
+</div>
+
+<script type="text/javascript">
+    const RootComponent = {
+        data() {
+            return {
+                age:12,
+                mySelect:'2',
+                hello:'',
+                message:'',
+                checked:true,
+                cNames:[],
+                picked:'A'
+            }
+        },
+        methods:{
+            getValue(){
+                console.log(this.hello)
+            }
+        }
+    };
+    let vm = Vue.createApp(RootComponent);
+    vm.mount("#root")
+</script>
+</body>
+</html>
