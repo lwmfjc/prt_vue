@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="component-demo">
+    <div :style="{fontSize:postFontSize+'em'}">
+        <!--自定义事件-->
+        <blog-post @enlarge-text="postFontSize += $event"
+                   v-for="blog in blogs" :key="blog.id"
+                   :title="blog.title"></blog-post>
+    </div>
+    <button-counter title="hehe"></button-counter>
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+</div>
+
+<script type="text/javascript">
+    const Component = {
+        data(){
+            return{
+                blogs:[{
+                    id:1,
+                    title:'博文A'
+                },{
+                    id:2,
+                    title:'博文B'
+                },{
+                    id:3,
+                    title:'博文C'
+                },],
+                postFontSize:1
+            }
+        }
+    };
+    const app = Vue.createApp(Component);
+    app.component('button-counter', {
+        data() {
+            return {
+                count: 0
+            }
+        },
+        template: `
+            <button @click="count++">You clicked me {{count}} times</button>
+
+`
+    });
+    app.component('blog-post',{
+        props:['title'],
+        template: `<h4>{{title}}</h4>
+            <button @click="$emit('enlargeText',0.1)">增大字号</button>`
+    });
+    app.mount("#component-demo")
+</script>
+</body>
+</html>

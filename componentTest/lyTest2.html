@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js">
+
+    </script>
+</head>
+<body>
+<div id="app">
+    <div :style="{ fontSize: lyFontSize + 'em'}">
+        <!--监听子组件的事件-->
+        <hello @will-large="lyFontSize+=0.1,lyMethod()"></hello>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const RootComponent = {
+        data() {
+            return {
+                lyFontSize: 0.5
+            }
+        },
+        methods:{
+            lyMethod(){
+                console.log("asdf")
+            }
+        }
+    };
+    const vm = Vue.createApp(RootComponent);
+    //通过调用内建的$emit方法并传入事件名称，来触发一个事件
+    vm.component("hello", {
+        template: `<h5>HelloWorld</h5>
+        <button @click="$emit('willLarge')">增大字体</button>`,
+        emits: ['willLarge'],
+    })
+    vm.mount('#app')
+</script>
+</body>
+</html>
