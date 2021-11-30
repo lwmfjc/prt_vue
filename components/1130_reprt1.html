@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="ly-container">
+    {{hello}}
+    <span>计数器{{n}}</span>
+    <p>{{mytext}}</p>
+    <button v-on:click="reverse">反转文字</button>
+    <div v-show="divShow" style="background-color: red;width: 100px;height: 100px"></div><br>
+    <button v-on:click="triggerDiv">{{(divShow?"隐藏":"显示")}}div</button>
+    <p>输入和显示绑定</p>
+    <p>{{myInput}}</p>
+    <input v-model="myInput">
+    <p>循环显示多个div</p>
+    <div v-for="todo in todos">
+        <p>{{todo.value}}</p>
+    </div>
+    <!--<my-cpt1 todo="swimming"></my-cpt1>-->
+    <!--或者用模板形式-->
+    <my-cpt1 v-bind:todo="swimming"></my-cpt1>
+</div>
+
+<script type="text/javascript">
+    const app=Vue.createApp({
+        data(){
+            return{
+                myInput:"",
+                divShow:true,
+                mytext:'雷猴啊',
+                n:0,
+                hello:"hello world!",
+                swimming:"my--Swimming",
+                todos:[
+                    {
+                        value:'吃饭'
+                    },
+                    {
+                        value:'洗澡'
+                    },
+                    {
+                        value:'睡觉'
+                    },
+                ]
+            }
+        },
+        mounted(){
+            setInterval(()=>{
+                this.n++;
+            },1000);
+        },
+        methods:{
+            triggerDiv(){
+              this.divShow=!this.divShow;
+            },
+            reverse(){
+                this.mytext=this.mytext.split('').reverse().join('');
+            }
+        }
+    });
+    app.component("myCpt1",{
+        props:['todo'],
+        template:`<p>Hello world ,I'm going {{todo}}</p>`
+    })
+    app.mount("#ly-container")
+</script>
+</body>
+</html>

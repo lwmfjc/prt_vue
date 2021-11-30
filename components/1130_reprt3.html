@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue/vue.global.js"></script>
+    <style type="text/css">
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <p :class="{active:isActive}">Hello World</p>
+    <button @click="tigActive">切换属性啦{{judgeValue}}</button>
+    <div v-if="judgeValue == 0">
+        A
+    </div>
+    <div v-else-if="judgeValue == 1">
+        B
+    </div>
+    <div v-else-if="judgeValue == 2">
+        C
+    </div>
+    <button @click="numAdd">数字增加</button>
+</div>
+<script type="text/javascript">
+    const RootComponent = {
+        data() {
+            return {
+                num:0,
+                isActive: true
+            }
+        },
+        computed:{
+          judgeValue(){
+              return this.num%3;
+          }
+        },
+        methods: {
+            numAdd(){
+              this.num++;
+            },
+            tigActive() {
+                this.isActive = !this.isActive;
+            }
+        }
+    };
+    const vm = Vue.createApp(RootComponent);
+    vm.mount("#app")
+</script>
+
+</body>
+</html>

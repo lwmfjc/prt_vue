@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+    <style type="text/css">
+        #ly-font1 {
+            color: fuchsia;
+        }
+
+        #ly-font2 {
+            color: seagreen;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p>学习组件实例的概念</p>
+    <p v-bind:id="myId">值只改变一次</p>
+    <button v-on:click="changeColor">更改上面文字颜色</button>
+    <p v-once>次数{{n}}</p>
+    <p>解析html代码(div里面包含了html代码,div标签是存在的)</p>
+    <div v-html="myRawHtml">
+    </div>
+    <p>计算属性和方法</p>
+    <p>计算属性的值{{computeTime}}</p>
+    <p>方法的值{{methodTime()}}</p>
+    <p>监听数据的变化</p>
+    <input v-model="lyChangeTxt">
+</div>
+<script type="text/javascript">
+    const RootComponent = {
+        data() {
+            return {
+                lyChangeTxt: '一个人',
+                n: 1,
+                hello: 'ha low',
+                myId: 'ly-font1',
+                myRawHtml: `<p style="color: red">hello world</p>`
+            }
+        },
+        //如果不需要有缓存，就用method替代
+        computed: {
+
+            computeTime() {
+                return Date.now();
+            }
+        },
+        created() {
+            console.log("实例倍创建了")
+        },
+        methods: {
+            methodTime() {
+                return Date.now()
+            },
+            changeColor() {
+                this.myId = this.myId === 'ly-font1' ? 'ly-font2' : 'ly-font1';
+            }
+        },
+        watch: {
+            lyChangeTxt(newV, oldV) {
+                console.log("从"+oldV+"变成了"+newV)
+            }
+        },
+        mounted() {
+            setInterval(() => {
+                this.n++
+            }, 1000)
+            console.log("实例被mounted")
+        }
+    };
+    const app = Vue.createApp(RootComponent);
+    //对根组件的渲染
+    const vm = app.mount("#app");
+    console.log(vm.hello)
+</script>
+</body>
+</html>

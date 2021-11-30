@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+        <!--id便于vue跟踪节点信息-->
+        <p v-for="(book,index) in changeArrSize" :key="book.id">
+            id {{book.id}} ：{{book.title}} 价格： {{book.price}}
+        </p>
+        <button @click="changeArraySize">修改数组长度</button>
+        <p>遍历对象属性</p>
+        <p v-for="(value,key,index) in myObj">第{{index+1}}个属性 key:{{key}} myObj:{{value}}</p>
+        <p>使用范围</p>
+        <p v-for="n1 in 5">
+            {{n1}}
+        </p>
+        <div>
+            <p>下面3个重复布局</p>
+            <template v-for="n in 3">
+                <p>嘿嘿</p>
+                <p>雷猴啊{{n}}</p>
+            </template>
+        </div>
+    </div>
+    <p>在组件上使用for</p>
+    <ly-cpt1 :value="n" v-for="n in 3"></ly-cpt1>
+</div>
+
+<!--脚本编写-->
+<script type="text/javascript">
+    const RootComponent = {
+        methods: {
+            changeArraySize() {
+                this.books.pop();
+            }
+        },
+        computed: {
+            changeArrSize() {
+                let k = this.books.filter(book => book.id % 2 === 0)
+                return k;
+            }
+        },
+        data() {
+            return {
+                myObj: {
+                    title: '我的前半生',
+                    bookSize: 200,
+                    type: '书籍'
+                },
+                books: [
+                    {
+                        id: 1,
+                        title: '武则天',
+                        price: 50
+                    },
+                    {
+                        id: 2,
+                        title: '汉武帝',
+                        price: 520
+                    },
+                    {
+                        id: 3,
+                        title: '七剑',
+                        price: 30
+                    },
+                    {
+                        id: 4,
+                        title: '神物',
+                        price: 310
+                    },
+                    {
+                        id: 5,
+                        title: '小叮当',
+                        price: 260
+                    },
+                ]
+            }
+        }
+    };
+    const vm = Vue.createApp(RootComponent);
+    vm.component("ly-cpt1",{
+        props:['value'],
+        template:`<p>我的第一个组件 {{value}}</p>`
+    })
+    vm.mount("#app");
+</script>
+</body>
+</html>
