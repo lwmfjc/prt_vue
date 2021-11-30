@@ -2,9 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
 </head>
 <body>
-$END$
+<div id="app">
+    <p>{{searchText}}</p>
+    <!--<custom-input v-model="searchText"></custom-input>-->
+    <!--初始值model-value会传进来-->
+    <custom-input
+            :model-value="searchText"
+            @update:model-value="m1"
+    >aabcd</custom-input>
+</div>
+<script type="text/javascript">
+    const Component = {
+        data() {
+            return {
+                searchText: ''
+            }
+        },
+        methods: {
+            m1(obj) {
+                console.log(obj.v2)
+            }
+        }
+    };
+    const vm = Vue.createApp(Component);
+    //初始化的时候，父组件传来的属性值给input(框里的值)，input输入的时候，
+    // 触发update:modelValue事件，由于父组件进行了监听,见上面
+    vm.component('custom-input', {
+        props: ['modelValue'],
+        emits: ['update:modelValue'],
+        template: `<input :value="modelValue" @input="$emit('update:modelValue',
+{v1:$event.target.value,v2:this.modelValue})"><div style="color:red"><slot></slot></div>`
+    })
+    vm.mount("#app");
+</script>
 </body>
 </html>

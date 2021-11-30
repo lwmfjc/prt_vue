@@ -2,9 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
 </head>
 <body>
-$END$
+<div id="app">
+    <p>{{lyText}}</p>
+    <!--<input v-model="lyText">-->
+    <!--等价于下面这句-->
+    <input :value="lyText" @input="lyText=$event.target.value">
+
+    <p>计数器 {{num}}</p>
+    <ly-hello name="刘义" @prt="prtClick"></ly-hello>
+</div>
+<script type="text/javascript">
+    const RootComponent={
+        data(){
+            return {
+                num:1,
+                lyText:'hi'
+            }
+        },
+        methods:{
+            prtClick(obj){
+                console.log(obj)
+                this.num++
+            }
+        }
+    };
+    const vm=Vue.createApp(RootComponent);
+    vm.component("ly-hello",{
+        props:['name'],
+        template:`<p>hello {{name}}</p><button @click="$.emit('prt',{a:1,b:2})">让计数器加一</button>`
+    })
+    vm.mount("#app")
+</script>
+
 </body>
 </html>
