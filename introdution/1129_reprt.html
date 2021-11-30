@@ -24,13 +24,19 @@
         <br>
 
     </div>
-    <my-cpt1 v-bind:todo="counter"></my-cpt1>
+    <my-cpt1 v-once v-bind:todo="counter"></my-cpt1>
+    <div>
+        {{htmlTest}}
+        <br>
+        <span v-html="htmlTest"></span>
+    </div>
 </div>
 <script type="text/javascript">
     const myCpt1 = {
         props:['todo'],
         template: `<p>hello {{todo}}</p>`,
     };
+    const htmlTest=`<span style="color: darkmagenta">hello color</span>`
     Vue.createApp({
         components: {
             myCpt1
@@ -41,6 +47,7 @@
                 dyntitle: new Date(),
                 myP: new Date().toLocaleString(),
                 seen: true,
+                htmlTest,
                 spans: [{
                     text: "t1",
                 }, {

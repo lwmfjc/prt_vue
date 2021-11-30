@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+
+<div id="myTest">
+    {{ hello }}
+    <button @click="m2">点击事件测试</button>
+    <span>{{authorJudge}}</span>
+    <span>{{index}}</span>
+</div>
+<script type="text/javascript">
+    const ly = Vue.createApp({
+        data() {
+            return {
+                hello: "你好呀",
+                author: {
+                    books: [
+                        {
+                            title: "book1",
+                            price: 20
+                        },
+                        {
+                            title: "book2",
+                            price: 50
+                        },
+                        {
+                            title: "book3",
+                            price: 80
+                        },
+                    ],
+                    name: "张三"
+                },
+                index: 1
+            }
+        },
+        watch: {
+            index(newL, oldL) {
+                console.log("新["+newL+"]--旧["+oldL+"]")
+            }
+        },
+        mounted() {
+            setInterval(() => {
+                this.index++;
+                console.log(this.index)
+            }, 1000)
+        },
+        computed: {
+            authorJudge() {
+                return this.author.books.length > 2 ? "太长" : "正好";
+            }
+        },
+        methods: {
+            m1() {
+                alert("1")
+            },
+            m2() {
+                alert("2")
+                return "abc";
+            }
+        }
+    }).mount("#myTest")
+    console.log(ly)
+</script>
+</body>
+</html>

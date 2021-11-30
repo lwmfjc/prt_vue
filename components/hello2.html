@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js">
+
+    </script>
+    <script type="text/javascript"></script>
+    <style type="text/css">
+        .active {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body id="ly-all">
+<hello />
+<!---表示这个类存在取决于isActive-->
+<div :class="{ active :isActive }"></div>
+<button @click="tig">切换样式</button>
+
+
+<script type="text/javascript">
+    import Hello from './Hello.vue';
+    Vue.createApp({
+        data() {
+            return {
+                isActive: true
+            }
+        },
+        components:{
+            Hello
+        },
+        methods: {
+            tig() {
+                this.isActive = !this.isActive;
+            }
+        }
+    }).mount("#ly-all")
+</script>
+</body>
+</html>
