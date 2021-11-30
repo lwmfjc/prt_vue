@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <p style="color: red">事件的处理</p>
+    <p>{{num}}</p>
+    <button @click="lyClick('23ad',$event),lyClick2(222)">增加计数器</button>
+</div>
+<script type="text/javascript">
+    const RootComponent = {
+        data() {
+            return {
+                num: 1
+            }
+        },
+        methods:{
+            lyClick( name,event){
+                console.log(name)
+                console.log(event.target.tagName)
+            },
+            lyClick2(name,event){
+                console.log('click2'+name)
+            }
+        }
+    };
+    const vm = Vue.createApp(RootComponent);
+
+    vm.mount("#app");
+</script>
+</body>
+</html>
