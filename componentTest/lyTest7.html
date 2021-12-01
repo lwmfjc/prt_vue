@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <cpt-b></cpt-b>
+</div>
+
+<script type="text/javascript">
+    const Component = {
+    };
+    const vm = Vue.createApp(Component);
+    vm.component('cptB', {
+        template: `<p>cptB</p><cpt-a></cpt-a>`
+    });
+    vm.component('cptA', {
+        template: `<p>cptA</p>`
+    });
+    vm.component('cptC', {
+        template: `<p>cptC</p>`
+    });
+    vm.mount("#app")
+</script>
+</body>
+</html>
