@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--<ly-cpt1>123</ly-cpt1>-->
+    <base-layout>
+        <template v-slot:header>
+            <h1>Here might be a page title</h1>
+        </template>
+        <template v-slot:default>
+            <p>A paragraph for the main content.</p>
+            <p>And another one.</p>
+        </template>
+        <template v-slot:footer>
+            <p>This is a footer</p>
+        </template>
+    </base-layout>
+</div>
+<script type="text/javascript">
+    const Component = {};
+    const app = Vue.createApp(Component);
+    app.component("ly-cpt1", {
+        template: `<p><slot>abc</slot></p>`
+    });
+    app.component("base-layout", {
+        template: `
+            <div class='container'>
+              <header><slot name="header"></slot></header>
+              <main><slot ></slot></main>
+              <footer><slot name="footer"></slot></footer>
+            </div>
+        `
+    })
+    app.mount("#app")
+</script>
+</body>
+</html>
