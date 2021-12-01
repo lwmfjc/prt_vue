@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>使用provide和inject</p>
+    <cpt-a></cpt-a>
+</div>
+<script type="text/javascript">
+    const Component={};
+    const app=Vue.createApp(Component);
+    app.component("cptA",{
+        data(){
+          return {
+              listData:[
+                  {
+                      name:'akj',
+                      age:2
+                  }
+              ]
+          }
+        },
+        provide(){
+            return {
+                name:Vue.computed(()=>"hello world"+this.listData.length)
+            }
+        },
+        template:`<div>cptA<cpt-b></cpt-b></div>
+<button @click="this.listData.push(1)">增加数组长度</button>`
+    });
+    app.component("cptB",{
+        template: `<div>cptB<cpt-c></cpt-c></div>`
+    });
+    app.component("cptC",{
+        inject:['name'],
+        template:`<div>cptC----{{name}}</div>`,
+        created(){
+            console.log(`Inje111cted property:`+this.name)
+        }
+    })
+    app.mount("#app");
+</script>
+</body>
+</html>
