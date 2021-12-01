@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+    <script type="text/css">
+    </script>
 </head>
 <body>
-$END$
+<div id="app" class="demo">
+    <button id="tig" @click="tig">更换下面的组件</button>
+    <component :is="currentCpt"></component>
+</div>
+<script type="text/javascript">
+    const Component={
+        data(){
+            return {
+                n:0
+            }
+        },
+        computed:{
+            currentCpt(){
+                return  'cpt'+this.n%3;
+            }
+        },
+        methods:{
+            tig(){
+                this.n++;
+            }
+        }
+    };
+    const vm=Vue.createApp(Component);
+    vm.component('cpt0',{
+        template:`<p>第0个组件</p>`
+    });
+
+    vm.component('cpt1',{
+        template:`<p>第1个组件</p>`
+    });
+
+    vm.component('cpt2',{
+        template:`<p>第2个组件</p>`
+    });
+
+    vm.mount("#app")
+</script>
 </body>
 </html>

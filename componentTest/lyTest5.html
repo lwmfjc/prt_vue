@@ -2,9 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
 </head>
 <body>
-$END$
+<div id="app">
+    <p>{{lyValue}}</p>
+    <!--<input :value="lyValue" @input="lyValue=$event.target.value">-->
+    <!--父组件监听update:my-value事件,在事件触发的时候更新lyValue的值-->
+    <my-input :my-value="lyValue" @update:my-value="handleInput"></my-input>
+
+    <p>另一种写法</p>
+    <x-input v-model="lxValue"></x-input>
+    <p>{{lxValue}}</p>
+</div>
+
+
+<script type="text/javascript">
+    const Component={
+        data(){
+            return{
+                lyValue:'123',
+                lxValue:'311'
+            }
+        },
+        methods:{
+            handleInput(value){
+                this.lyValue=value;
+            }
+        }
+    };
+    const vm=Vue.createApp(Component);
+    vm.component("my-input",{
+        props:['myValue'],
+        template:`<div style="background-color: darksalmon;width: 300px;height: 300px">
+                     <input :value="myValue" @input="$.emit('update:my-value',$event.target.value)">
+                  </div>`
+    });
+    vm.component("x-input",{
+       props:['modelValue'],
+       emits:['update:modelValue'],
+       template: `<input v-model='value'>`,
+       computed:{
+           value:{
+               get(){
+                   return this.modelValue;
+               },
+               set(value){
+                   this.$emit('update:modelValue',value)
+               }
+           }
+       }
+    });
+    vm.mount("#app")
+</script>
 </body>
 </html>
