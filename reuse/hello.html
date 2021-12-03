@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vue/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app">
+    {{myHello}}
+</div>
+<script type="text/javascript">
+    const Component={
+        template:`<p>Hello--{{myHello}}</p>`,
+        data(){
+            return{
+                myHello:'lyHello!!!'
+            }
+        }
+    };
+    const app=Vue.createApp(Component);
+
+    app.mount("#app")
+</script>
+</body>
+</html>
